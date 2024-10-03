@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,9 +44,10 @@ public class FacultyPersonService {
         return facultyPersonRepo.save(facultyPerson);
     }
 
-    /*public void removePersonFromFaculty(Long id) {
-        facultyPersonRepo.deleteById(id);
-    }*/
+
+    public List<FacultyPerson> getAllFacultiesByPerson(Long personId) {
+        return facultyPersonRepo.findByPersonId(personId);
+    }
 
     public ApiResponse removePersonFromFaculty(Long id) {
         Optional<FacultyPerson> existingFacultyPersonOptional = facultyPersonRepo.findById(id);

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/faculty-person")
 @CrossOrigin
@@ -26,6 +28,17 @@ public class FacultyPersonController {
         try {
             FacultyPerson facultyPerson = facultyPersonService.assignPersonToFaculty(personId, facultyId);
             return new ResponseEntity<>(facultyPerson, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /* Get all faculties person is connected to */
+    @GetMapping("")
+    public ResponseEntity<?> getPersonFaculties(@RequestParam Long personId) {
+        try {
+            List<FacultyPerson> faculties = facultyPersonService.getAllFacultiesByPerson(personId);
+            return new ResponseEntity<>(faculties, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
