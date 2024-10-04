@@ -44,10 +44,10 @@ public class FacultyPersonController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> removePersonFromFaculty(@PathVariable Long id) {
+    @DeleteMapping("")
+    public ResponseEntity<?> removePersonFromFaculty(@RequestParam Long personId, @RequestParam Long facultyId) {
         try {
-            ApiResponse response = facultyPersonService.removePersonFromFaculty(id);
+            ApiResponse response = facultyPersonService.removePersonFromFaculty(personId, facultyId);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (RuntimeException e) {
             if (e.getMessage().contains("foreign key constraints")) {

@@ -76,7 +76,7 @@ public class PersonService {
             existingPerson.setAcademicTitle(person.getAcademicTitle());
             existingPerson.setAdmin(person.isAdmin());
             existingPerson.setWorker(person.isWorker());
-            existingPerson.setProfessor(person.isWorker());
+            existingPerson.setProfessor(person.isProfessor());
             existingPerson.setStudent(person.isStudent());
 
             return personRepo.save(existingPerson);

@@ -49,11 +49,11 @@ public class FacultyPersonService {
         return facultyPersonRepo.findByPersonId(personId);
     }
 
-    public ApiResponse removePersonFromFaculty(Long id) {
-        Optional<FacultyPerson> existingFacultyPersonOptional = facultyPersonRepo.findById(id);
+    public ApiResponse removePersonFromFaculty(Long personId, Long facultyId) {
+        Optional<FacultyPerson> existingFacultyPersonOptional = facultyPersonRepo.findByPersonIdAndFacultyId(personId, facultyId);
         if (existingFacultyPersonOptional.isPresent()) {
             try {
-                facultyPersonRepo.deleteById(id);
+                facultyPersonRepo.delete(existingFacultyPersonOptional.get());
                 return new ApiResponse("User removed from faculty");
             } catch (DataIntegrityViolationException e) {
                 throw new RuntimeException("Cannot remove user from faculty due to foreign key constraints");
