@@ -1,6 +1,7 @@
 package com.fsre.attendance_tracker_backend.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,22 +27,35 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Value("${security.remember-me.key}")
+    private String rememberMeKey;
+
     /* REAL AUTH */
-    /*@Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(customizer -> customizer.disable())
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/auth/login", "/persons").permitAll()
-                        .requestMatchers("/auth/generate-password/**").hasAnyRole("ADMIN", "WORKER")
+                        .requestMatchers(
+                                "/auth/login",
+                                "/auth/change-password/**")
+                        .permitAll()
+                        .requestMatchers(
+                                "/auth/generate-password/**",
+                                "/persons/filter",
+                                "/faculties",
+                                "/faculty-person",
+                                "/persons")
+                        .hasAnyRole("ADMIN", "WORKER")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-    }*/
+    }
 
     /* NO AUTH */
-    @Bean
+    /*@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
@@ -51,7 +65,7 @@ public class SecurityConfig {
                 // Comment out the JWT filter for testing
                 //.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-    }
+    }*/
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
