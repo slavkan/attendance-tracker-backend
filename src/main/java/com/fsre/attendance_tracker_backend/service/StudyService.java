@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +26,10 @@ public class StudyService {
 
     @Autowired
     private FacultyRepo facultyRepo;
+
+    public List<Study> getAllStudiesByFaculty(Long facultyId) {
+        return Optional.ofNullable(studyRepo.findByFacultyId(facultyId)).orElse(Collections.emptyList());
+    }
 
 
     public Study addStudy(Study study) {

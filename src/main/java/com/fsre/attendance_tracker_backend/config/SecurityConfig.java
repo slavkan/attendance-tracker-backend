@@ -27,8 +27,6 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Value("${security.remember-me.key}")
-    private String rememberMeKey;
 
     /* REAL AUTH */
     @Bean
@@ -45,7 +43,10 @@ public class SecurityConfig {
                                 "/persons/filter",
                                 "/faculties",
                                 "/faculty-person",
-                                "/persons")
+                                "/persons",
+                                "/study",
+                                "/subjects"
+                                )
                         .hasAnyRole("ADMIN", "WORKER")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
