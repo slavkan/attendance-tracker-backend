@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -45,4 +47,17 @@ public class Person {
 
     @Column(nullable = false)
     private boolean isStudent;
+
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    private Set<FacultyPerson> facultyPersons;
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    private Set<SubjectPerson> subjectPerson;
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    private Set<ClassAttendance> classAttendances;
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    private Set<ClassSession> classSessions;
 }

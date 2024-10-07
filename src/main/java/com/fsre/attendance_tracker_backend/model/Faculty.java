@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,4 +22,11 @@ public class Faculty {
 
     @Column(unique = true, nullable = false)
     private String abbreviation;
+
+
+    @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
+    private Set<FacultyPerson> facultyPersons;
+
+    @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
+    private Set<Study> study;
 }

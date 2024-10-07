@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,4 +23,7 @@ public class Study {
     @ManyToOne
     @JoinColumn(name = "faculty_id", nullable = false)
     private Faculty faculty;
+
+    @OneToMany(mappedBy = "study", fetch = FetchType.LAZY)
+    private Set<Subject> subjects;
 }

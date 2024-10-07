@@ -104,7 +104,8 @@ public class PersonService {
         Pageable pageable = PageRequest.of(page, size);
         Specification<Person> spec = Specification.where(PersonSpecifications.hasFirstName(filter.getFirstName()))
                 .and(PersonSpecifications.hasLastName(filter.getLastName()))
-                .and(PersonSpecifications.hasRole(filter.getRole())); // Use hasRole instead of individual role specifications
+                .and(PersonSpecifications.hasRole(filter.getRole()))
+                .and(PersonSpecifications.hasFacultyId(filter.getFacultyId()));
 
         return personRepo.findAll(spec, pageable);
     }

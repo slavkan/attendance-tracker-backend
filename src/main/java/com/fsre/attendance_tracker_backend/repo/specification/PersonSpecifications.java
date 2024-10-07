@@ -45,4 +45,13 @@ public class PersonSpecifications {
         };
     }
 
+    public static Specification<Person> hasFacultyId(Long facultyId) {
+        return (root, query, criteriaBuilder) -> {
+            if (facultyId == null) {
+                return null;
+            }
+            return criteriaBuilder.equal(root.join("facultyPersons").get("faculty").get("id"), facultyId);
+        };
+    }
+
 }

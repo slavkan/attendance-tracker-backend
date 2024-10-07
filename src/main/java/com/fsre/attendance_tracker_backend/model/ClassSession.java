@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -30,4 +31,8 @@ public class ClassSession {
     @ManyToOne
     @JoinColumn(name = "professor_id", nullable = false)
     private Person person;
+
+    @OneToMany(mappedBy = "classSession", fetch = FetchType.LAZY)
+    private Set<ClassAttendance> classAttendances;
+
 }
