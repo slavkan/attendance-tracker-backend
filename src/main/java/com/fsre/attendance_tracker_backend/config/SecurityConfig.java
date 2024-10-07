@@ -47,7 +47,8 @@ public class SecurityConfig {
                                 "/study",
                                 "/subjects"
                                 )
-                        .hasAnyRole("ADMIN", "WORKER")
+                        .hasAnyRole("ADMIN", "WORKER", "PROFESSOR")
+
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

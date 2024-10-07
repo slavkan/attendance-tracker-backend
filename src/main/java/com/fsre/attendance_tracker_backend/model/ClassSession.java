@@ -21,8 +21,13 @@ public class ClassSession {
     @Column(nullable = false)
     private LocalDateTime startTime;
 
-    @Column(nullable = false)
     private LocalDateTime endTime;
+
+    @Column
+    private String codeForArrival;
+
+    @Column
+    private String codeForDeparture;
 
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
