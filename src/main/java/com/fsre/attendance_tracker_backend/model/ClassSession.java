@@ -18,6 +18,10 @@ public class ClassSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ClassSessionState state;
+
     @Column(nullable = false)
     private LocalDateTime startTime;
 
@@ -27,7 +31,13 @@ public class ClassSession {
     private String codeForArrival;
 
     @Column
+    private String codeForArrivalPrevious;
+
+    @Column
     private String codeForDeparture;
+
+    @Column
+    private String codeForDeparturePrevious;
 
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
