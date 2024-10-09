@@ -33,12 +33,6 @@ public class ClassSession {
     @Column
     private String codeForArrivalPrevious;
 
-    @Column
-    private String codeForDeparture;
-
-    @Column
-    private String codeForDeparturePrevious;
-
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;

@@ -36,7 +36,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
                                 "/auth/login",
-                                "/auth/change-password/**")
+                                "/auth/change-password/**",
+                                "/ws/**",
+                                "/ws")
                         .permitAll()
                         .requestMatchers(
                                 "/auth/generate-password/**",
@@ -48,8 +50,8 @@ public class SecurityConfig {
                                 "/subjects"
                                 )
                         .hasAnyRole("ADMIN", "WORKER", "PROFESSOR")
-                        .requestMatchers("/scan")
-                        .hasAnyRole("ADMIN", "STUDENT")
+                        .requestMatchers("/scan", "/class-attendance/**")
+                        .hasAnyRole("ADMIN", "STUDENT", "PROFESSOR")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

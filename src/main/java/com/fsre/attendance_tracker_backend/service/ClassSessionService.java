@@ -65,6 +65,18 @@ public class ClassSessionService {
         }
     }
 
+    public ClassSession changeQRCode(Long classSessionId, String qrCode) {
+        Optional<ClassSession> existingClassSessionOptional = classSessionRepo.findById(classSessionId);
+        if (existingClassSessionOptional.isPresent()) {
+            ClassSession existingClassSession = existingClassSessionOptional.get();
+            existingClassSession.setCodeForArrivalPrevious(existingClassSession.getCodeForArrival());
+            existingClassSession.setCodeForArrival(qrCode);
+            return classSessionRepo.save(existingClassSession);
+        } else {
+            throw new RuntimeException("Class session not found with id " + classSessionId);
+        }
+    }
+
 
 
 }

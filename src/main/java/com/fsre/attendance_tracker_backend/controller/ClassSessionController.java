@@ -49,7 +49,7 @@ public class ClassSessionController {
     }
 
 
-    @PostMapping("start")
+    @PostMapping("/start")
     public ResponseEntity<?> startNewClassSession(@RequestParam Long subjectId, @RequestParam Long professor_id) {
         try {
             ClassSession classSession = classSessionService.startNewClassSession(subjectId, professor_id);
@@ -59,10 +59,20 @@ public class ClassSessionController {
         }
     }
 
-    @PostMapping("end")
+    @PostMapping("/end")
     public ResponseEntity<?> endClassSession(@RequestParam Long classSessionId) {
         try {
             ClassSession classSession = classSessionService.endClassSession(classSessionId);
+            return new ResponseEntity<>(classSession, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/change-qr-code")
+    public ResponseEntity<?> changeQRCode(@RequestParam Long classSessionId, @RequestParam String newCode) {
+        try {
+            ClassSession classSession = classSessionService.changeQRCode(classSessionId, newCode);
             return new ResponseEntity<>(classSession, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);

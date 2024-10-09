@@ -20,7 +20,7 @@ public class ClassAttendance {
     @Column(nullable = false)
     private LocalDateTime arrivalTime;
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime departureTime;
 
     @ManyToOne
