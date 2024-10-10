@@ -77,6 +77,16 @@ public class ClassSessionService {
         }
     }
 
+    public ClassSession setOffset(Long classSessionId, Long offset) {
+        Optional<ClassSession> existingClassSessionOptional = classSessionRepo.findById(classSessionId);
+        if (existingClassSessionOptional.isPresent()) {
+            ClassSession existingClassSession = existingClassSessionOptional.get();
+            existingClassSession.setOffsetInMinutes(offset);
+            return classSessionRepo.save(existingClassSession);
+        } else {
+            throw new RuntimeException("Class session not found with id " + classSessionId);
+        }
+    }
 
 
 }

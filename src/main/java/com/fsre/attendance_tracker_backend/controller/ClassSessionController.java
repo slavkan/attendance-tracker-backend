@@ -79,5 +79,15 @@ public class ClassSessionController {
         }
     }
 
+    @PutMapping("/set-offset")
+    public ResponseEntity<?> setOffset(@RequestParam Long classSessionId, @RequestParam Long offset) {
+        try {
+            ClassSession classSession = classSessionService.setOffset(classSessionId, offset);
+            return new ResponseEntity<>(classSession, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }

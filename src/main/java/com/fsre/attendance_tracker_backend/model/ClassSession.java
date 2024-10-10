@@ -25,6 +25,7 @@ public class ClassSession {
     @Column(nullable = false)
     private LocalDateTime startTime;
 
+    @Column
     private LocalDateTime endTime;
 
     @Column
@@ -32,6 +33,11 @@ public class ClassSession {
 
     @Column
     private String codeForArrivalPrevious;
+
+    /* All times (arrival, departure, endTime) will be offset by X minutes
+    Helps for testing application, not intended for production */
+    @Column
+    private Long offsetInMinutes;
 
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)

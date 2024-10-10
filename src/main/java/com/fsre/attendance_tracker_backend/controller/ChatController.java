@@ -1,10 +1,7 @@
 package com.fsre.attendance_tracker_backend.controller;
 
 import com.fsre.attendance_tracker_backend.model.*;
-import com.fsre.attendance_tracker_backend.repo.ClassAttendanceRepo;
-import com.fsre.attendance_tracker_backend.repo.ClassSessionRepo;
-import com.fsre.attendance_tracker_backend.repo.PersonRepo;
-import com.fsre.attendance_tracker_backend.repo.SubjectPersonRepo;
+import com.fsre.attendance_tracker_backend.repo.*;
 import com.fsre.attendance_tracker_backend.service.ClassAttendanceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +70,8 @@ public class ChatController {
         message.setClassSessionId(studentArrivalDto.getClassSessionId());
         message.setPersonId(personId);
 
+
+
         Person person = personRepo.findById(personId).orElse(null);
         if (person == null) {
             message.setFirstName("Unknown");
@@ -123,7 +122,7 @@ public class ChatController {
                 simpMessagingTemplate.convertAndSendToUser(studentArrivalDto.getClassSessionId().toString(),"/private-student", message);
                 return message;
             } else {
-                attendance.setDepartureTime(LocalDateTime.now());
+                attendance.setDepartureTime(LocalDateTime.now().plusMinutes(classSession.getOffsetInMinutes()));
                 classAttendanceRepo.save(attendance);
                 message.setMessage("Student has departed from class session");
                 simpMessagingTemplate.convertAndSendToUser(studentArrivalDto.getClassSessionId().toString(),"/private", message);
@@ -138,7 +137,7 @@ public class ChatController {
             ClassAttendance attendance = new ClassAttendance();
             attendance.setClassSession(classSession);
             attendance.setPerson(person);
-            attendance.setArrivalTime(LocalDateTime.now());
+            attendance.setArrivalTime(LocalDateTime.now().plusMinutes(classSession.getOffsetInMinutes()));
             classAttendanceRepo.save(attendance);
             return message;
         }
