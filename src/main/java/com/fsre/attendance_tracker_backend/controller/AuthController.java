@@ -52,8 +52,8 @@ public class AuthController {
     public ResponseEntity<?> generateNewPassword(@PathVariable Long id, @RequestBody PasswordChangeDto passwordChange) {
         try {
             Person updatedPerson = authService.changePassword(id, passwordChange.getPassword());
-            return new ResponseEntity<>("Password changed successfully", HttpStatus.OK);
-        } catch (RuntimeException e) {
+            return new ResponseEntity<>(new ApiResponse("Password changed successfully"), HttpStatus.OK);
+        } catch (RuntimeException e) {git
             return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
