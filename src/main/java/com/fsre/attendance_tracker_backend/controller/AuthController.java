@@ -53,7 +53,7 @@ public class AuthController {
         try {
             Person updatedPerson = authService.changePassword(id, passwordChange.getPassword());
             return new ResponseEntity<>(new ApiResponse("Password changed successfully"), HttpStatus.OK);
-        } catch (RuntimeException e) {git
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
