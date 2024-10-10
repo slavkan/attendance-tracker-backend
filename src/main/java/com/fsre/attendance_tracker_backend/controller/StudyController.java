@@ -29,6 +29,17 @@ public class StudyController {
         }
     }
 
+    /*Get single study by id*/
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getStudyById(@PathVariable Long id) {
+        try {
+            Study study = studyService.getStudyById(id);
+            return new ResponseEntity<>(study, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("")
     public ResponseEntity<?> addStudy(@RequestBody Study study) {
         try {

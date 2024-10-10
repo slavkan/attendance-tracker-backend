@@ -31,6 +31,15 @@ public class StudyService {
         return Optional.ofNullable(studyRepo.findByFacultyId(facultyId)).orElse(Collections.emptyList());
     }
 
+    public Study getStudyById(Long id) {
+        Optional<Study> studyOptional = studyRepo.findById(id);
+        if (studyOptional.isPresent()) {
+            return studyOptional.get();
+        } else {
+            throw new RuntimeException("Study not found with id " + id);
+        }
+    }
+
 
     public Study addStudy(Study study) {
         Long facultyId = study.getFaculty().getId();
