@@ -17,6 +17,16 @@ public class ClassAttendanceController {
     private ClassAttendanceService classAttendanceService;
 
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getClassAttendancesForSession(@PathVariable Long id) {
+        try {
+            Iterable<ClassAttendance> attendances = classAttendanceService.getClassAttendancesForSession(id);
+            return new ResponseEntity<>(attendances, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/student-arrival")
     public ResponseEntity<?> studentArrival(@RequestParam Long classSessionId, @RequestParam Long personId, @RequestParam String code) {
         try{

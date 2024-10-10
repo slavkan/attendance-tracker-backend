@@ -29,6 +29,13 @@ public class ClassAttendanceService {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
+
+
+    public Iterable<ClassAttendance> getClassAttendancesForSession(Long sessionId) {
+        classSessionRepo.findById(sessionId).orElseThrow(() -> new RuntimeException("Class Session not found"));
+        return classAttendanceRepo.findByClassSessionId(sessionId);
+    }
+
     public ClassAttendance studentToAttendance(Long classSessionId, Long personId, String code) {
         Person person = personRepo.findById(personId).orElseThrow(() -> new RuntimeException("Person not found"));
         ClassSession classSession = classSessionRepo.findById(classSessionId).orElseThrow(() -> new RuntimeException("Class Session not found"));
@@ -47,8 +54,6 @@ public class ClassAttendanceService {
 
         /* Check if code is current one, if not then student has sent previous code (which also works) */
         boolean isCodeCurrent = Objects.equals(classSession.getCodeForArrival(), code);
-
-
 
         Optional<ClassAttendance> classAttendance = classAttendanceRepo.findByClassSessionIdAndPersonId(classSessionId, personId);
         /* If student has arrived at session */
