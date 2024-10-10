@@ -60,9 +60,9 @@ public class ClassSessionController {
     }
 
     @PostMapping("/end")
-    public ResponseEntity<?> endClassSession(@RequestParam Long classSessionId) {
+    public ResponseEntity<?> endClassSession(@RequestParam Long classSessionId, @RequestParam(required = false) boolean nullifyUnfinishedAttendances) {
         try {
-            ClassSession classSession = classSessionService.endClassSession(classSessionId);
+            ClassSession classSession = classSessionService.endClassSession(classSessionId, nullifyUnfinishedAttendances);
             return new ResponseEntity<>(classSession, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
